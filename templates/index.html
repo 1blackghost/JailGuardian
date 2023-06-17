@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JailGuardian - Jail Management System</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+    @import url("/static/style.css");
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img class="logo" src="/static/logo.png" alt="JailGuardian Logo">
+            <nav class="menu">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+    <section class="login-input" style="display: none;">
+        <div class="login-container">
+            <h2>Login</h2>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-input">
+                </div>
+                <button type="submit" id="submit-button" class="form-button">Submit</button>
+            </form>
+        </div>
+    </section>
+
+        <div class="hero-section">
+            <h1>Welcome to JailGuardian</h1>
+            <p>A comprehensive jail management system for efficient and secure corrections.</p>
+            <a class="cta-button" id="login-but" >Login</a>
+        </div>
+
+        <section class="features-section" id="features">
+            <h2>Key Features</h2>
+            <div class="feature">
+                <span class="feature-icon">🔒</span>
+                <h3 class="feature-title">Enhanced Security</h3>
+                <p class="feature-description">Ensure the highest level of security and control within your correctional facility.</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">💡</span>
+                <h3 class="feature-title">Efficient Operations</h3>
+                <p class="feature-description">Streamline your daily operations and automate routine tasks for increased efficiency.</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📊</span>
+                <h3 class="feature-title">Data Insights</h3>
+                <p class="feature-description">Gain valuable insights and make data-driven decisions to improve your facility management.</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🔐</span>
+                <h3 class="feature-title">Access Control</h3>
+                <p class="feature-description">Manage and control access to restricted areas and ensure authorized personnel are granted entry.</p>
+            </div>
+        </section>
+
+        <section class="about-section" id="about">
+            <h2>About JailGuardian</h2>
+            <p>JailGuardian is a state-of-the-art jail management system designed to streamline the management of correctional facilities. Our robust software offers enhanced security, efficient operations, valuable data insights, and advanced access control features, allowing correctional facilities to maintain a secure and controlled environment. With JailGuardian, you can optimize your facility's operations, improve resource allocation, and ensure the safety and well-being of staff and inmates.</p>
+        </section>
+
+        <section class="contact-section" id="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions or need assistance? Reach out to our team for support.</p>
+            <p>Email: info@jailguardian.com</p>
+            <p>Phone: 123-456-7890</p>
+        </section>
+
+        <footer class="footer">
+            &copy; 2023 JailGuardian. All rights reserved.
+        </footer>
+    </div>
+</body>
+<script>
+        $(document).ready(function() {
+            $(".login-input").hide();
+
+            $("#login-but").click(function() {
+                $(".hero-section").hide();
+
+                $(".login-input").fadeIn(1000);
+            });
+        });
+</script>
+</html>
