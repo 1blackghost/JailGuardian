@@ -29,7 +29,7 @@
             <h2>Login</h2>
             <div class="login-form">
                 <div class="form-group">
-                    <label for="username">Username:</label>
+                    <label for="username">ID:</label>
                     <input type="text" id="username" name="username" class="form-input">
                 </div>
                 <div class="form-group">
@@ -103,17 +103,14 @@
             });
         });
          $("#submit-button").click(function() {
-    // Retrieve the username and password values
     var username = $('#username').val();
     var password = $('#password').val();
 
-    // Create a data object to send in the request
     var data = {
       username: username,
       password: password
     };
 
-    // Send an AJAX POST request to the backend
     $.ajax({
       url: '/login',
       type: 'POST',
