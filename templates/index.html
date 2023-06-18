@@ -27,7 +27,7 @@
     <section class="login-input" style="display: none;">
         <div class="login-container">
             <h2>Login</h2>
-            <form class="login-form">
+            <div class="login-form">
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" class="form-input">
@@ -37,7 +37,11 @@
                     <input type="password" id="password" name="password" class="form-input">
                 </div>
                 <button type="submit" id="submit-button" class="form-button">Submit</button>
-            </form>
+
+            </div>
+
+        <div class="error-section" style="color: red;"></div>
+
         </div>
     </section>
 
@@ -98,5 +102,34 @@
                 $(".login-input").fadeIn(1000);
             });
         });
+         $("#submit-button").click(function() {
+    // Retrieve the username and password values
+    var username = $('#username').val();
+    var password = $('#password').val();
+
+    // Create a data object to send in the request
+    var data = {
+      username: username,
+      password: password
+    };
+
+    // Send an AJAX POST request to the backend
+    $.ajax({
+      url: '/login',
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function(response) {
+        console.log("success");
+        if (response.message === "ok") {
+            window.location.href = "/dashboard";
+        }
+
+      },
+      error: function(error) {
+        $('.error-section').text('Error: ' + error.responseJSON.message);
+      }
+    });
+  });
 </script>
 </html>

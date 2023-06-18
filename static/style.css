@@ -245,3 +245,7 @@
 .login-form .form-button:hover {
     background-color: #333;
 }
+.error-section {
+  color: red;
+  margin-top: 10px;
+}
