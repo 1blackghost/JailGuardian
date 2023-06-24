@@ -6,28 +6,27 @@
     @import url("/static/dashboard.css");
   </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/static/main.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 <body>
   <div class="container">
-        <header style="background-color: #000000;">
-            <img class="logo" src="/static/logo.png" alt="JailGuardian Logo">
-            <nav class="menu">
-                <ul>
-                    <li><a onclick="changeTab(0)">Add</a></li>
-                    <li><a onclick="changeTab(1)">Search</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                </ul>
-                <div style="position: relative;top:30px">
-                  <span style="font-weight: bold; margin-right: 5px;">Welcome,</span>
-                  <span>{{user}}</span>
-                </div>
-            </nav>
-
-        </header>
-    </div>
+    <header style="background-color: #000000;">
+      <img class="logo" src="/static/logo.png" alt="JailGuardian Logo">
+      <nav class="menu">
+        <ul>
+          <li><a onclick="changeTab(0)">Add</a></li>
+          <li><a onclick="changeTab(1)">Search</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+        <div style="position: relative;top:30px">
+          <span style="font-weight: bold; margin-right: 5px;">Welcome,</span>
+          <span>{{user}}</span>
+        </div>
+      </nav>
+    </header>
+  </div>
   
   <div id="tabs">
     <div class="tab-button active" onclick="changeTab(0)">ADD</div>
@@ -36,401 +35,130 @@
   
   <div class="tab-content active">
     <div id="successMessage" style="display: none;">
-    <h3>Success!</h3>
-    <p>New inmate added successfully!.</p>
-  </div>
+      <h3>Success!</h3>
+      <p>New inmate added successfully!.</p>
+    </div>
 
-  <div id="errorMessage" style="display: none;">
-    <h3>Error!</h3>
-    <p>An error occurred while adding new inmate.</p>
-  </div>
+    <div id="errorMessage" style="display: none;">
+      <h3>Error!</h3>
+      <p>An error occurred while adding new inmate.</p>
+    </div>
 
-
-      <div class="form-container">
-    <div class="form-field">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name">
+    <div class="form-container">
+      <div class="form-field">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+      </div>
+      <div class="form-field">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob">
+      </div>
+      <div class="form-field">
+        <label for="adhar">Adhar Number:</label>
+        <input type="text" id="adhar" name="adhar">
+      </div>
+      <div class="form-field">
+        <label for="nationality">Nationality:</label>
+        <input type="text" id="nationality" name="nationality">
+      </div>
+      <div class="form-field">
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state">
+      </div>
+      <div class="form-field">
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="4"></textarea>
+      </div>
+      <div class="form-field">
+        <label for="ipc">IPC Section:</label>
+        <input type="text" id="ipc" name="ipc">
+      </div>
+      <div class="form-field">
+        <label for="jail-type">Jail Type:</label>
+        <select id="jail-type" name="jail-type" onchange="updateJailDropdown()">
+          <option value="central">Central Jail</option>
+          <option value="district">District Jail</option>
+          <option value="sub-jail">Sub Jail</option>
+        </select>
+      </div>
+      <div class="form-field" id="jail-location-field" style="display: none;">
+        <label for="jail-location">Jail Location:</label>
+        <select id="jail-location" name="jail-location"></select>
+      </div>
+      <div class="form-field">
+        <label for="jail-count">Number of Times in Jail:</label>
+        <input type="number" id="jail-count" name="jail-count">
+      </div>
+      <div class="form-submit">
+        <button type="submit" id="submitData">Submit</button>
+      </div>
     </div>
-    <div class="form-field">
-      <label for="dob">Date of Birth:</label>
-      <input type="date" id="dob" name="dob">
-    </div>
-    <div class="form-field">
-      <label for="adhar">Adhar Number:</label>
-      <input type="text" id="adhar" name="adhar">
-    </div>
-    <div class="form-field">
-      <label for="nationality">Nationality:</label>
-      <input type="text" id="nationality" name="nationality">
-    </div>
-    <div class="form-field">
-      <label for="state">State:</label>
-      <input type="text" id="state" name="state">
-    </div>
-    <div class="form-field">
-      <label for="address">Address:</label>
-      <textarea id="address" name="address" rows="4"></textarea>
-    </div>
-    <div class="form-field">
-      <label for="ipc">IPC Section:</label>
-      <input type="text" id="ipc" name="ipc">
-    </div>
-    <div class="form-field">
-      <label for="jail-type">Jail Type:</label>
-      <select id="jail-type" name="jail-type">
-        <option value="central">Central Jail</option>
-        <option value="district">District Jail</option>
-        <option value="sub-jail">Sub Jail</option>
-      </select>
-    </div>
-    <div class="form-field">
-      <label for="jail-location">Jail Location:</label>
-      <input type="text" id="jail-location" name="jail-location">
-    </div>
-    <div class="form-field">
-      <label for="jail-count">Number of Times in Jail:</label>
-      <input type="number" id="jail-count" name="jail-count">
-    </div>
-    <div class="form-submit">
-      <button type="submit" id="submitData">Submit</button>
-    </div>
-  </div>
-
-
   </div>
 
   <div class="tab-content" id="fix">
-     <div class="tab-content active">
     <div id="successMessage1" style="display: none;">
-    <h3>Success!</h3>
-    <p>Updated Data!</p>
-  </div>
+      <h3>Success!</h3>
+      <p>Updated Data!</p>
+    </div>
 
-  <div id="errorMessage1" style="display: none;">
-    <h3>Error!</h3>
-    <p>An error occurred while updation.</p>
-  </div>
+    <div id="errorMessage1" style="display: none;">
+      <h3>Error!</h3>
+      <p>An error occurred while updating.</p>
+    </div>
+        <div class="form-container">
+      <div class="form-field">
+        <label for="new-name">Name:</label>
+        <input type="text" id="new-name" name="new-name">
+      </div>
+      <div class="form-field">
+        <label for="new-dob">Date of Birth:</label>
+        <input type="date" id="new-dob" name="new-dob">
+      </div>
+      <div class="form-field">
+        <label for="new-adhar">Adhar Number:</label>
+        <input type="text" id="new-adhar" name="new-adhar">
+      </div>
+      <div class="form-field">
+        <label for="new-nationality">Nationality:</label>
+        <input type="text" id="new-nationality" name="new-nationality">
+      </div>
+      <div class="form-field">
+        <label for="new-state">State:</label>
+        <input type="text" id="new-state" name="new-state">
+      </div>
+      <div class="form-field">
+        <label for="address">Address:</label>
+        <textarea id="new-address" name="new-address" rows="4"></textarea>
+      </div>
+      <div class="form-field">
+        <label for="ipc">IPC Section:</label>
+        <input type="text" id="new-ipc" name="new-ipc">
+      </div>
+      <div class="form-field">
+        <label for="jail-type">Jail Type:</label>
+        <select id="new-jail-type" name="new-jail-type" onchange="updateJailDropdown2()">
+          <option value="central">Central Jail</option>
+          <option value="district">District Jail</option>
+          <option value="sub-jail">Sub Jail</option>
+        </select>
+      </div>
+      <div class="form-field" id="new-jail-location-field" style="display: none;">
+        <label for="new-jail-location">Jail Location:</label>
+        <select id="new-jail-location" name="new-jail-location"></select>
+      </div>
+      <div class="form-field">
+        <label for="new-jail-count">Number of Times in Jail:</label>
+        <input type="number" id="new-jail-count" name="new-jail-count">
+      </div>
+      <div class="form-submit">
+        <button type="submit" id="searchFor">Submit</button>
+      </div>
+    </div>
     <div id="mytab">
-  <input type="text" id="search-bar" placeholder="Search Anything..." autocomplete="off">
- 
-  <div id="preview-results" style="display: none;"></div>
-  <div id="search-result"></div>
-      
-
-  <div id="preview-results" style="display: none;"></div>
-  <div id="search-results"></div>
-  <div id="newdiv"></div>
-  </div>
-</div>
-
-
-
+      <div id="search-result"></div>
+    </div>
   </div>
 
-  <script>
-    function changeTab(tabIndex) {
-      var tabButtons = document.getElementsByClassName('tab-button');
-      var tabContents = document.getElementsByClassName('tab-content');
-      if (tabIndex==0){
-        $("#newdiv").hide();
-      }
-      else{
-        if ($('#mytab').is(':visible')) {
-        // #mytab is shown, do nothing
-      } else {
-        // #mytab is not shown, show #newdiv
-        $("#newdiv").show();
-      }
 
-      }
-      for (var i = 0; i < tabButtons.length; i++) {
-        tabButtons[i].classList.remove('active');
-        tabContents[i].classList.remove('active');
-      }
-
-      tabButtons[tabIndex].classList.add('active');
-      tabContents[tabIndex].classList.add('active');
-    }
-    $(document).ready(function() {
-      $("#newdiv").hide();
-  $("#submitData").click(function() {
-    var name = $("#name").val();
-    var dob = $("#dob").val();
-    var adhar = $("#adhar").val();
-    var nationality = $("#nationality").val();
-    var state = $("#state").val();
-    var address = $("#address").val();
-    var ipc = $("#ipc").val();
-    var jailType = $("#jail-type").val();
-    var jailLocation = $("#jail-location").val();
-    var jailCount = $("#jail-count").val();
-
-    var data = {
-      name: name,
-      dob: dob,
-      adhar: adhar,
-      nationality: nationality,
-      state: state,
-      address: address,
-      ipc: ipc,
-      jailType: jailType,
-      jailLocation: jailLocation,
-      jailCount: jailCount
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "/add",
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      success: function(response) {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        console.log("Success:", response);
-        $("#errorMessage").hide();
-
-        $("#successMessage").show();
-      },
-      error: function(error) {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        console.log("Error:", error);
-        $("#errorMessage").show();
-        $("#successMessage").hide();
-      }
-    });
-  });
-});
-$(document).ready(function() {
-  $('#search-bar').on('input', function() {
-    var searchQuery = $(this).val();
-
-    if (searchQuery === "") {
-      $("#preview-results").hide();
-    } else {
-      $("#preview-results").show();
-
-      $.post('/getData', { searchQuery: searchQuery }, function(data) {
-        displayPreviewResults(data);
-      });
-    }
-  });
-
-  $('#search-button').on('click', function() {
-    var searchQuery = $('#search-bar').val();
-
-    $.post('/getData', { searchQuery: searchQuery }, function(data) {
-      displaySearchResults(data);
-    });
-  });
-
-  function displayPreviewResults(results) {
-    var previewContainer = $('#preview-results');
-    previewContainer.empty();
-
-    if (results.length > 0) {
-      $.each(results, function(index, result) {
-        var previewItem = $('<div>').addClass('preview-item');
-
-        // Format and append the preview values
-        previewItem.append('<p><strong>Name:</strong> ' + result.name + '</p>');
-        previewItem.append('<p><strong>UID:</strong> ' + result.uid + '</p>');
-        previewItem.append('<p><strong>Date of Birth:</strong> ' + result.dob + '</p>');
-        previewItem.append('<p><strong>Adhar:</strong> ' + result.adhar + '</p>');
-        previewItem.append('<p><strong>Nationality:</strong> ' + result.nationality + '</p>');
-        previewItem.append('<p><strong>State:</strong> ' + result.state + '</p>');
-        previewItem.append('<p><strong>Address:</strong> ' + result.address + '</p>');
-        previewItem.append('<p><strong>IPC Section:</strong> ' + result.ipc_section + '</p>');
-        previewItem.append('<p><strong>Jail Type:</strong> ' + result.jail_type + '</p>');
-        previewItem.append('<p><strong>Jail Location:</strong> ' + result.jail_location + '</p>');
-        previewItem.append('<p><strong>Times in Jail:</strong> ' + result.times_in_jail + '</p>');
-
-        previewItem.on('click', function() {
-          $('#search-bar').val(result.name); // Assuming 'name' field is the relevant search term
-          $('#preview-results').hide();
-          displaySearchResults([result]); // Display only the selected record in the search results
-        });
-
-        previewContainer.append(previewItem);
-      });
-    } else {
-      var noResultsMessage = $('<div>').text('No results found').addClass('preview-item no-results');
-      previewContainer.append(noResultsMessage);
-    }
-
-    previewContainer.show();
-  }
-
-  function displaySearchResults(results) {
-    var searchResultsContainer = $('#search-results');
-    searchResultsContainer.empty();
-
-    $.each(results, function(index, result) {
-      var searchResultItem = $('<div>').addClass('search-result-item');
-
-
-      searchResultItem.append("<button class='edit-button' onclick='func("+result.uid+")'>Edit</button>")
-
-      searchResultItem.append('<h2>' + result.name + '</h2>');
-      searchResultItem.append('<p><strong>UID:</strong> ' + result.uid + '</p>');
-      searchResultItem.append('<p><strong>Date of Birth:</strong> ' + result.dob + '</p>');
-      searchResultItem.append('<p><strong>Adhar:</strong> ' + result.adhar + '</p>');
-      searchResultItem.append('<p><strong>Nationality:</strong> ' + result.nationality + '</p>');
-      searchResultItem.append('<p><strong>State:</strong> ' + result.state + '</p>');
-      searchResultItem.append('<p><strong>Address:</strong> ' + result.address + '</p>');
-      searchResultItem.append('<p><strong>IPC Section:</strong> ' + result.ipc_section + '</p>');
-      searchResultItem.append('<p><strong>Jail Type:</strong> ' + result.jail_type + '</p>');
-      searchResultItem.append('<p><strong>Jail Location:</strong> ' + result.jail_location + '</p>');
-      searchResultItem.append('<p><strong>Times in Jail:</strong> ' + result.times_in_jail + '</p>');
-
-      searchResultsContainer.append(searchResultItem);
-    });
-  }
-});
-   function func(uid) {
-  // Hide the #mytab element
-  $('#mytab').hide();
- $("#newdiv").show();
-  // Create form container
-  var formContainer = $('#newdiv');
-  // Send POST request to /collect/id
-  $.post("/collect/" + uid, function(data) {
-    // Parse the response as JSON
-    var result = JSON.parse(data);
-    $("#newdiv").empty();
-        var backButton = $('<div>').addClass('form-submit')
-      .append($('<button>').addClass('back-button').attr('type', 'button').attr('id', 'back').text('<Back'))
-      .appendTo(formContainer);
-    var nameField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'name').text('Name:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'text', id: 'name1', name: 'name' }).val(result.name))
-      .appendTo(formContainer);
-
-    var dobField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'dob').text('Date of Birth:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'date', id: 'dob1', name: 'dob' }).val(result.dob))
-      .appendTo(formContainer);
-
-    var adharField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'adhar').text('Adhar Number:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'text', id: 'adhar1', name: 'adhar' }).val(result.adhar))
-      .appendTo(formContainer);
-
-    var nationalityField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'nationality').text('Nationality:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'text', id: 'nationality1', name: 'nationality' }).val(result.nationality))
-      .appendTo(formContainer);
-
-    var stateField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'state').text('State:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'text', id: 'state1', name: 'state' }).val(result.state))
-      .appendTo(formContainer);
-
-    var addressField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'address').text('Address:'))
-      .append($('<textarea>').addClass('form-input').attr({ id: 'address1', name: 'address', rows: '4' }).val(result.address))
-      .appendTo(formContainer);
-
-    var ipcField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'ipc').text('IPC Section:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'text', id: 'ipc1', name: 'ipc' }).val(result.ipc_section))
-      .appendTo(formContainer);
-
-    var jailTypeField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'jail-type').text('Jail Type:'))
-      .append($('<select>').addClass('form-input').attr({ id: 'jail-type1', name: 'jail-type' })
-        .append($('<option>').attr('value', 'central').text('Central Jail'))
-        .append($('<option>').attr('value', 'district').text('District Jail'))
-        .append($('<option>').attr('value', 'sub-jail').text('Sub Jail')))
-      .val(result.jail_type)
-      .appendTo(formContainer);
-
-    var jailLocationField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'jail-location').text('Jail Location:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'text', id: 'jail-location1', name: 'jail-location' }).val(result.jail_location))
-      .appendTo(formContainer);
-
-    var jailCountField = $('<div>').addClass('form-field')
-      .append($('<label>').addClass('form-label').attr('for', 'jail-count').text('Number of Times in Jail:'))
-      .append($('<input>').addClass('form-input').attr({ type: 'number', id: 'jail-count1', name: 'jail-count' }).val(result.times_in_jail))
-      .appendTo(formContainer);
-
-    var submitButton = $('<div>').addClass('form-submit')
-      .append($('<button>').addClass('submit-button').attr('type', 'submit').attr('id', 'submitData').text('Submit'))
-      .appendTo(formContainer);
-
-
-
-    // Apply red color to the back button
-    $('.back-button').css('background-color', 'red');
-    $('.back-button').css('margin-right', "500px");
-    $('.back-button').css('margin-bottom', "50px");
-
-    // Append form container to the document body
-    $('body').append(formContainer);
-
-    // Function for submit button click event
-    function updation(uid) {
-    var name = $("#name1").val();
-    var dob = $("#dob1").val();
-    var adhar = $("#adhar1").val();
-    var nationality = $("#nationality1").val();
-    var state = $("#state1").val();
-    var address = $("#address1").val();
-    var ipc = $("#ipc1").val();
-    var jailType = $("#jail-type1").val();
-    var jailLocation = $("#jail-location1").val();
-    var jailCount = $("#jail-count1").val();
-
-    var data = {
-      uid:uid,
-      name: name,
-      dob: dob,
-      adhar: adhar,
-      nationality: nationality,
-      state: state,
-      address: address,
-      ipc: ipc,
-      jailType: jailType,
-      jailLocation: jailLocation,
-      jailCount: jailCount
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "/update",
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      success: function(response) {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        console.log("Success:", response);
-        $("#errorMessage1").hide();
-
-        $("#successMessage1").show();
-      },
-      error: function(error) {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        console.log("Error:", error);
-        $("#errorMessage1").show();
-        $("#successMessage1").hide();
-      }
-    });
-    }
-
-    // Function for back button click event
-    function back() {
-      $('#newdiv').hide();
-      $('#mytab').show();
-    }
-
-    // Assign click event handlers
-  formContainer.on('click', '#submitData', function() {
-    updation(uid);
-  });
-
-    formContainer.on('click', '#back', back);
-  });
-}
-
-
-  </script>
 </body>
 </html>

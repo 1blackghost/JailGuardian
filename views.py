@@ -8,20 +8,101 @@ from assets import officials,inmates
 import json
 
 
-def search(search_term):
-    results = []
-    inmate_data = inmates.read_inmate()
+def search_in_database(name, dob, adhar, nationality, state, address, ipc, jailType, jailLocation, jailCount):
+    # Perform the search and find the intersection in the database
 
-    for inmate in inmate_data:
-        for field, value in inmate.items():
-            if isinstance(value, str) and search_term in value:
-                results.append(inmate)
-                break
-            elif isinstance(value, int) and str(search_term) in str(value):
-                results.append(inmate)
-                break
+    # Assuming you have a database table named 'records'
+    # with columns corresponding to the fields being searched
+
+    # Start with all records
+    results = get_all_records()
+    # Apply filters based on the provided search criteria
+    if name:
+        results = filter_records_by_name(results, name)
+    if dob:
+        results = filter_records_by_dob(results, dob)
+    if adhar:
+        results = filter_records_by_adhar(results, adhar)
+    if nationality:
+        results = filter_records_by_nationality(results, nationality)
+    if state:
+        results = filter_records_by_state(results, state)
+    if address:
+        results = filter_records_by_address(results, address)
+    if ipc:
+        results = filter_records_by_ipc(results, ipc)
+    if jailType:
+        results = filter_records_by_jail_type(results, jailType)
+    if jailLocation:
+        results = filter_records_by_jail_location(results, jailLocation)
+    if jailCount:
+        results = filter_records_by_jail_count(results, jailCount)
 
     return results
+
+# Implement functions to filter records based on each field
+
+def filter_records_by_name(records, name):
+    return [record for record in records if record['name'] == name]
+
+def filter_records_by_dob(records, dob):
+    return [record for record in records if record['dob'] == dob]
+
+def filter_records_by_adhar(records, adhar):
+    return [record for record in records if record['adhar'] == adhar]
+
+def filter_records_by_nationality(records, nationality):
+    return [record for record in records if record['nationality'] == nationality]
+
+def filter_records_by_state(records, state):
+    return [record for record in records if record['state'] == state]
+
+def filter_records_by_address(records, address):
+    return [record for record in records if record['address'] == address]
+
+def filter_records_by_ipc(records, ipc):
+    return [record for record in records if record['ipc'] == ipc]
+
+def filter_records_by_jail_type(records, jailType):
+    return [record for record in records if record['jail_type'] == jailType]
+
+def filter_records_by_jail_location(records, jailLocation):
+    return [record for record in records if record['jail_location'] == jailLocation]
+
+def filter_records_by_jail_count(records, jailCount):
+    return [record for record in records if record['times_in_jail'] == jailCount]
+
+# Function to get all records from the database
+def get_all_records():
+    # Retrieve all records from the database
+    # ...
+    # Replace this with your actual implementation to fetch records from the database
+    # ...
+
+    # Example records
+    records=inmates.read_inmate()
+
+    return records
+@app.route("/search", methods=["POST"])
+def search():
+    data = request.get_json()
+    # Extract the data from the request
+    name = data.get("name")
+    dob = data.get("dob")
+    adhar = data.get("adhar")
+    nationality = data.get("nationality")
+    state = data.get("state")
+    address = data.get("address")
+    ipc = data.get("ipc")
+    jailType = data.get("jailType")
+    jailLocation = data.get("jailLocation")
+    jailCount = data.get("jailCount")
+
+    # Perform the search and find the intersection in the database
+    results = search_in_database(name, dob, adhar, nationality, state, address, ipc, jailType, jailLocation, jailCount)
+    print(results)
+    # Return the results as a response
+    return jsonify(results)
 
 
 @app.route("/update",methods=["GET","POST"])
@@ -43,16 +124,7 @@ def update():
 
     return jsonify({"message": "Inmate added successfully"}), 200    
 
-@app.route("/collect/<id>",methods=["GET","POST"])
-def collect(id):
-    data=inmates.read_inmate(str(id))
-    return json.dumps(data),200
 
-@app.route("/getData",methods=["GET","POST"])
-def getData():
-    search_term = request.form.get("searchQuery")
-    data=search(search_term)
-    return data
 
 
 @app.route("/add", methods=["POST"])
