@@ -55,7 +55,16 @@ $(document).ready(function() {
                 }, "slow");
                 console.log("Success:", response);
                 $("#errorMessage").hide();
-
+                $("#name").val("");
+                $("#dob").val("");
+                $("#adhar").val("");
+                $("#nationality").val("");
+                $("#state").val("");
+                $("#address").val("");
+                $("#ipc").val("");
+                $("#jail-type").val("");
+                $("#jail-location").val("");
+                $("#jail-count").val("");
                 $("#successMessage").show();
             },
             error: function(error) {
@@ -124,16 +133,15 @@ function displaySearchResults(results) {
 }
 
 function func(uid, results) {
-    var resultData = null;
+    console.log("Results array:", results);
 
-    for (var i = 0; i < results.length; i++) {
-        if (results[i].uid === uid) {
-            resultData = results[i];
-            break;
-        }
-    }
-
+    var resultData = results.find(function(record) {
+        return record.uid.toString() === uid.toString();
+    });
     if (resultData) {
+        console.log("Data found!");
+        console.log(resultData);
+
         $("#uid").val(uid);
         $('#new1-name').val(resultData.name);
         var dob = new Date(resultData.dob);
@@ -141,30 +149,32 @@ function func(uid, results) {
         var month = (dob.getMonth() + 1).toString().padStart(2, '0');
         var day = dob.getDate().toString().padStart(2, '0');
         var formattedDob = year + '-' + month + '-' + day;
-        console.log(formattedDob);
 
         $('#new1-dob').val(formattedDob);
-
-
-        $('#new1-dob').val(formattedDob);
-
         $('#new1-adhar').val(resultData.adhar);
         $('#new1-nationality').val(resultData.nationality);
         $('#new1-state').val(resultData.state);
         $('#new1-address').val(resultData.address);
         $('#new1-ipc').val(resultData.ipc_section);
         $('#new1-jail-type').val(resultData.jail_type);
-        $('#new1-jail-location').append($('<option>', {
+        
+        var select = $('#new1-jail-location');
+        select.empty();
+        select.append($('<option>', {
             value: resultData.jail_location,
-            text: resultData.jail_location
+            text: resultData.jail_location,
+            selected: true
         }));
 
         $('#new1-jail-count').val(resultData.times_in_jail);
 
         $("#search-result").hide();
         $("#update").show();
+    } else {
+        console.log("Data not found for uid: " + uid);
     }
 }
+
 
 
 function updation() {
@@ -418,8 +428,9 @@ $(document).ready(function() {
             data: JSON.stringify(data),
             success: function(response) {
                 delay(1000);
-                $("#searchSection").hide();
                 displaySearchResults(response);
+                $("#searchSection").hide();
+                $("#search-result").show();
             },
             error: function(error) {
                 console.log(error);

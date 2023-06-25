@@ -33,7 +33,7 @@ def reset_back_to_start() -> None:
     c.execute("DROP TABLE IF EXISTS inmates")
     if a in ("y", "yes"):
         c.execute('''CREATE TABLE IF NOT EXISTS inmates
-                    (uid INT AUTO_INCREMENT PRIMARY KEY,
+                    (uid VARCHAR(255) PRIMARY KEY,
                      name VARCHAR(255) NOT NULL,
                      dob DATE NOT NULL,
                      adhar VARCHAR(255) NOT NULL,
@@ -43,7 +43,7 @@ def reset_back_to_start() -> None:
                      ipc_section VARCHAR(255) NOT NULL,
                      jail_type VARCHAR(255) NOT NULL,
                      jail_location VARCHAR(255) NOT NULL,
-                     times_in_jail INT NOT NULL
+                     times_in_jail VARCHAR(255) NOT NULL
                      )''')
 
     conn.commit()

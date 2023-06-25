@@ -139,6 +139,7 @@
                 <div class="form-field">
                     <label for="jail-type">Jail Type:</label>
                     <select id="new-jail-type" name="new-jail-type" onchange="updateJailDropdown2()">
+                        <option value="central">--Not Selected--</option>
                         <option value="central">Central Jail</option>
                         <option value="district">District Jail</option>
                         <option value="sub-jail">Sub Jail</option>
@@ -147,10 +148,6 @@
                 <div class="form-field" id="new-jail-location-field" style="display: none;">
                     <label for="new-jail-location">Jail Location:</label>
                     <select id="new-jail-location" name="new-jail-location"></select>
-                </div>
-                <div class="form-field">
-                    <label for="new-jail-count">Number of Times in Jail:</label>
-                    <input type="number" id="new-jail-count" name="new-jail-count">
                 </div>
                 <div class="form-submit">
                     <button type="submit" id="searchFor">Search</button>
