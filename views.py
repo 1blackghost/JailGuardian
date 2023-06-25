@@ -2,19 +2,32 @@
 This module contains the views/routes of the website.
 """
 
-from flask import jsonify, request, session,redirect,url_for,render_template
+from flask import jsonify, request, session, redirect, url_for, render_template
 from main import app
-from assets import officials,inmates
+from assets import officials, inmates
 import json
 
 
 def search_in_database(name, dob, adhar, nationality, state, address, ipc, jailType, jailLocation, jailCount):
-    # Perform the search and find the intersection in the database
+    """
+    Search the database for records that match the provided criteria.
 
-    # Assuming you have a database table named 'records'
-    # with columns corresponding to the fields being searched
+    Args:
+        name (str): Name of the inmate.
+        dob (str): Date of birth of the inmate.
+        adhar (str): Aadhar number of the inmate.
+        nationality (str): Nationality of the inmate.
+        state (str): State of the inmate.
+        address (str): Address of the inmate.
+        ipc (str): IPC section of the inmate.
+        jailType (str): Type of jail the inmate has been to.
+        jailLocation (str): Location of the jail the inmate has been to.
+        jailCount (str): Number of times the inmate has been in jail.
 
-    # Start with all records
+    Returns:
+        list: List of records matching the search criteria.
+    """
+
     results = get_all_records()
     # Apply filters based on the provided search criteria
     if name:
@@ -40,51 +53,174 @@ def search_in_database(name, dob, adhar, nationality, state, address, ipc, jailT
 
     return results
 
-# Implement functions to filter records based on each field
 
 def filter_records_by_name(records, name):
+    """
+    Filter the records by the given name.
+
+    Args:
+        records (list): List of inmate records.
+        name (str): Name of the inmate.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['name'] == name]
 
+
 def filter_records_by_dob(records, dob):
+    """
+    Filter the records by the given date of birth.
+
+    Args:
+        records (list): List of inmate records.
+        dob (str): Date of birth of the inmate.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['dob'] == dob]
 
+
 def filter_records_by_adhar(records, adhar):
+    """
+    Filter the records by the given Aadhar number.
+
+    Args:
+        records (list): List of inmate records.
+        adhar (str): Aadhar number of the inmate.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['adhar'] == adhar]
 
+
 def filter_records_by_nationality(records, nationality):
+    """
+    Filter the records by the given nationality.
+
+    Args:
+        records (list): List of inmate records.
+        nationality (str): Nationality of the inmate.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['nationality'] == nationality]
 
+
 def filter_records_by_state(records, state):
+    """
+    Filter the records by the given state.
+
+    Args:
+        records (list): List of inmate records.
+        state (str): State of the inmate.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['state'] == state]
 
+
 def filter_records_by_address(records, address):
+    """
+    Filter the records by the given address.
+
+    Args:
+        records (list): List of inmate records.
+        address (str): Address of the inmate.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['address'] == address]
 
+
 def filter_records_by_ipc(records, ipc):
+    """
+    Filter the records by the given IPC section.
+
+    Args:
+        records (list): List of inmate records.
+        ipc (str): IPC section of the inmate.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['ipc'] == ipc]
 
+
 def filter_records_by_jail_type(records, jailType):
+    """
+    Filter the records by the given jail type.
+
+    Args:
+        records (list): List of inmate records.
+        jailType (str): Type of jail the inmate has been to.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['jail_type'] == jailType]
 
+
 def filter_records_by_jail_location(records, jailLocation):
+    """
+    Filter the records by the given jail location.
+
+    Args:
+        records (list): List of inmate records.
+        jailLocation (str): Location of the jail the inmate has been to.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
     return [record for record in records if record['jail_location'] == jailLocation]
 
+
 def filter_records_by_jail_count(records, jailCount):
-    return [record for record in records if record['times_in_jail'] == jailCount]
+    """
+    Filter the records by the given jail count.
 
-# Function to get all records from the database
+    Args:
+        records (list): List of inmate records.
+        jailCount (str): Number of times the inmate has been in jail.
+
+    Returns:
+        list: Filtered list of records.
+    """
+
+
 def get_all_records():
-    # Retrieve all records from the database
-    # ...
-    # Replace this with your actual implementation to fetch records from the database
-    # ...
+    """
+    Get all the inmate records from the database.
 
-    # Example records
-    records=inmates.read_inmate()
-
+    Returns:
+        list: List of all inmate records.
+    """
+    records = inmates.read_inmate()
     return records
+
+
 @app.route("/search", methods=["POST"])
 def search():
+    """
+    Perform a search in the database based on the provided criteria.
+
+    Returns:
+        json: List of records matching the search criteria.
+    """
     data = request.get_json()
     # Extract the data from the request
     name = data.get("name")
@@ -100,15 +236,21 @@ def search():
 
     # Perform the search and find the intersection in the database
     results = search_in_database(name, dob, adhar, nationality, state, address, ipc, jailType, jailLocation, jailCount)
-    print(results)
+
     # Return the results as a response
     return jsonify(results)
 
 
-@app.route("/update",methods=["GET","POST"])
+@app.route("/update", methods=["GET", "POST"])
 def update():
+    """
+    Update an inmate's information in the database.
+
+    Returns:
+        json: Response message.
+    """
     data = request.get_json()
-    uid=data.get("uid")
+    uid = data.get("uid")
     name = data.get("name")
     dob = data.get("dob")
     adhar = data.get("adhar")
@@ -120,15 +262,19 @@ def update():
     jail_location = data.get("jailLocation")
     times_in_jail = data.get("jailCount")
 
-    inmates.update_inmate(uid,name, dob, adhar, nationality, state, address, ipc_section, jail_type, jail_location, times_in_jail)
+    inmates.update_inmate(uid, name, dob, adhar, nationality, state, address, ipc_section, jail_type, jail_location, times_in_jail)
 
-    return jsonify({"message": "Inmate added successfully"}), 200    
-
-
+    return jsonify({"message": "Inmate added successfully"}), 200
 
 
 @app.route("/add", methods=["POST"])
 def add_inmate():
+    """
+    Add a new inmate to the database.
+
+    Returns:
+        json: Response message.
+    """
     data = request.get_json()
 
     name = data.get("name")
@@ -146,8 +292,15 @@ def add_inmate():
 
     return jsonify({"message": "Inmate added successfully"}), 200
 
+
 @app.route("/login", methods=["POST"])
 def login():
+    """
+    Log in an official to the system.
+
+    Returns:
+        json: Response message.
+    """
     data = request.get_json()
     user_data = officials.read_user()
 
@@ -157,20 +310,33 @@ def login():
     for user in user_data:
         print(user)
         if user[0] == username and user[2] == password:
-            session["user"]=username
-            return {"message":"ok"},200
+            session["user"] = username
+            return {"message": "ok"}, 200
 
-    return {"message":"Invalid Credentials"}, 400
+    return {"message": "Invalid Credentials"}, 400
 
-@app.route("/dashboard",methods=["GET","POST"])
+
+@app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+    """
+    Render the dashboard template.
+
+    Returns:
+        template: Dashboard template.
+    """
     if "user" in session:
-        return render_template("dashboard.html",user=session["user"])
+        return render_template("dashboard.html", user=session["user"])
     else:
         return redirect(url_for("home"))
 
 
 @app.route("/logout")
 def logout():
-    session.clear();
+    """
+    Log out the currently logged-in official.
+
+    Returns:
+        redirect: Redirects to the home page.
+    """
+    session.clear()
     return redirect(url_for("home"))
