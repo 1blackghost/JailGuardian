@@ -93,7 +93,6 @@ function back_to_search() {
 
 
 }
-
 function displaySearchResults(results) {
     console.log(results);
     var searchResultsContainer = $('#search-result');
@@ -109,12 +108,12 @@ function displaySearchResults(results) {
     searchResultsContainer.append("<button class='back-button' onclick='back_to_search()'>&#8592; Back to Search</button>");
     searchResultsContainer.append("<h1>Results Found!</h1>");
 
-    $.each(results, function(index, result) {
+    $.each(results[0], function(index, result) {
         console.log(result);
 
         var searchResultItem = $('<div>').addClass('search-result-item');
 
-        searchResultItem.append("<button class='edit-button' onclick='func(" + result.uid + ", " + JSON.stringify(results) + ")'>Edit</button>");
+        searchResultItem.append("<button class='edit-button' onclick='func(" + result.uid + ", " + JSON.stringify(result) + ")'>Edit</button>");
 
         searchResultItem.append('<h2>' + result.name + '</h2>');
         searchResultItem.append('<p><strong>UID:</strong> ' + result.uid + '</p>');

@@ -9,57 +9,77 @@ import json
 
 
 def search_in_database(name,dob,adhar,nationality,state,address,ipc,jailType,jailLocation):
-
+    data=[]
     results = get_all_records()
     if name!="":
         results = filter_records_by_name(results, name)
+        if len(results)!=0:
+            data.append(results)
     if dob!="":
         results = filter_records_by_dob(results,dob)
+        if len(results)!=0:
+            data.append(results)
     if adhar!="":
         results = filter_records_by_adhar(results,adhar)
+        if len(results)!=0:
+            data.append(results)
     if nationality!="":
         results = filter_records_by_nationality(results,nationality)
+        if len(results)!=0:
+            data.append(results)
     if state!="":
         results = filter_records_by_state(results,state)
+        if len(results)!=0:
+            data.append(results)
     if address!="":
         results = filter_records_by_address(results,address)
+        if len(results)!=0:
+            data.append(results)
     if ipc!="":
         results = filter_records_by_ipc(results,ipc)
+        if len(results)!=0:
+            data.append(results)
     if jailType!="--Not Selected--":
         results = filter_records_by_jail_type(results,jailType)
+        if len(results)!=0:
+            data.append(results)
     if jailType!="--Not Selected--" and jailLocation!=None:
         results = filter_records_by_jail_location(results,jailLocation)
+        if len(results)!=0:
+            data.append(results)
+    print(data)
 
 
 
-    return results
+    return data
 
 def filter_records_by_jail_location(records, jailLocation):
-    return [record for record in records if record['jail_location'] in str(jailLocation)]
+    return [record for record in records if str(jailLocation).lower() in str(record['jail_location']).lower()]
 
 def filter_records_by_jail_type(records, jailType):
-    return [record for record in records if record['jail_type'] in str(jailType)]
+    return [record for record in records if str(jailType).lower() in str(record['jail_type']).lower()]
 
 def filter_records_by_ipc(records, ipc):
-    return [record for record in records if record['ipc_section'] in str(ipc)]
+    return [record for record in records if str(ipc).lower() in str(record['ipc_section']).lower()]
 
 def filter_records_by_address(records, address):
-    return [record for record in records if record['address'] in str(address)]
+    return [record for record in records if str(address).lower() in str(record['address']).lower()]
 
 def filter_records_by_state(records, state):
-    return [record for record in records if record['state'] in str(state)]
+    return [record for record in records if str(state).lower() in str(record['state']).lower()]
 
 def filter_records_by_nationality(records, nationality):
-    return [record for record in records if record['nationality'] in str(nationality)]
+    return [record for record in records if str(nationality).lower() in str(record['nationality']).lower()]
 
 def filter_records_by_name(records, name):
-    return [record for record in records if record['name'] in str(name)]
+    return [record for record in records if str(name).lower() in str(record['name']).lower()]
 
 def filter_records_by_dob(records, adhar):
-    return [record for record in records if record['adhar'] in str(adhar)]
+    return [record for record in records if str(adhar).lower() in str(record['adhar']).lower()]
 
 def filter_records_by_dob(records, dob):
-    return [record for record in records if record['dob'] in str(dob)]
+    return [record for record in records if str(dob).lower() in str(record['dob']).lower()]
+
 
 def get_all_records():
 
@@ -136,7 +156,6 @@ def login():
     password = data.get("password")
 
     for user in user_data:
-        print(user)
         if str(user[0]) == str(username) and str(user[2]) == str(password):
             session["user"]=username
             return {"message":"ok"},200
