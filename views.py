@@ -36,9 +36,10 @@ def search_in_database(name,dob,adhar,nationality,state,address,ipc,jailType,jai
         if len(results)!=0:
             data.append(results)
     if ipc!="":
-        results = filter_records_by_ipc(results,ipc)
-        if len(results)!=0:
-            data.append(results)
+        for i in ipc.split(","):
+            results = filter_records_by_ipc(results,i)
+            if len(results)!=0:
+                data.append(results)
     if jailType!="--Not Selected--":
         results = filter_records_by_jail_type(results,jailType)
         if len(results)!=0:
@@ -47,7 +48,6 @@ def search_in_database(name,dob,adhar,nationality,state,address,ipc,jailType,jai
         results = filter_records_by_jail_location(results,jailLocation)
         if len(results)!=0:
             data.append(results)
-    print(data)
 
 
 
